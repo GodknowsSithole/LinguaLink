@@ -1,0 +1,9 @@
+import "./styles.css";
+export const metadata = { title: "LinguaLink Chat" };
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html>
+      <body>{children}</body>
+    </html>
+  );
+}

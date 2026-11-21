@@ -1,0 +1,88 @@
+{
+ "tests": [
+  {
+   "id": "TC-12",
+   "name": "Search users (case-insensitive name, e-mail fragment, no match)",
+   "expected": "uppercase name finds Sipho; e-mail fragment finds exactly Sipho; nonsense returns empty list",
+   "actual": "name hit=True, e-mail hit=True, no match=True",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-13",
+   "name": "Hide and unhide a user",
+   "expected": "hidden user disappears from the people list and returns after unhide",
+   "actual": "hidden=True, restored=True",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-14",
+   "name": "Delete a message for me only",
+   "expected": "recipient no longer sees it; sender still does",
+   "actual": "recipient sees=False, sender sees=True",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-15",
+   "name": "Delete for everyone (sender) and delete a non-existent message",
+   "expected": "200 and message gone for both; 404 for unknown id",
+   "actual": "delete=200, gone for both=True, unknown=404",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-16",
+   "name": "Clear chat for me",
+   "expected": "caller's history is empty afterwards; the other user's history is unchanged",
+   "actual": "caller=0 messages, other=2 messages",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-17",
+   "name": "Change preferred language then re-translate a text message",
+   "expected": "language saved (200); re-translation returns Sesotho text that differs from the isiZulu text and replaces the stored translation",
+   "actual": "patch=200, translate=200 in 1.37s, lang=sot_Latn, changed=True, stored matches=True",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-18",
+   "name": "Upload a .docx document and translate it",
+   "expected": "upload 200 with extracted text; translate 200",
+   "actual": "upload=200, translate=200, text='Sicela ulethe umazisi wakho emtholampilo ngoMsombuluko.'",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-19",
+   "name": "Upload a .pdf document (text extracted)",
+   "expected": "upload 200 and the PDF text is extracted into the message",
+   "actual": "upload=200, text='Please bring your identity document.'",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-20",
+   "name": "Upload a file larger than 10 MB",
+   "expected": "400 'File too large (max 10MB)'",
+   "actual": "400 File too large (max 10MB)",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-21",
+   "name": "Message between two users with the same language",
+   "expected": "200; text unchanged; no model call needed (fast)",
+   "actual": "200, unchanged=True, 1.20s",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-22",
+   "name": "Invalid preferred language and unknown recipient",
+   "expected": "400 for an unsupported language; 404 for a recipient that does not exist",
+   "actual": "language=400, recipient=404",
+   "status": "Pass"
+  },
+  {
+   "id": "TC-23",
+   "name": "Protected endpoints require a token",
+   "expected": "403 (no bearer token) on every protected route",
+   "actual": "{'/users': 403, '/messages/8': 403, '/users/blocked': 403}",
+   "status": "Pass"
+  }
+ ]
+}
